@@ -1,0 +1,145 @@
+#include <jsni.h>
+
+# addon specific
+JSNIRegisterMethod(env, exports, "hello", Method);
+
+# common apis
+void Native(JSNIEnv* env, const JSNICallbackInfo  info)
+
+JSValueRef object
+JSValueRef value
+JSValueRef value
+JSValueRef a, JSValueRef b
+JSValueRef a, JSValueRef b
+
+JSNISetReturnValue(env, info, _result_)
+
+JSNINewNull(env)
+JSNINewObject(env)
+JSNINewNumber(env, 100.01)
+JSNINewBoolean(env, true)
+JSNINewArray(env, 100)
+JSNIGetGlobalValue(env, _persistent_)
+
+JSGlobalValueRef global
+_persistent_ = JSNINewGlobalValue(env, _value_)/* TODO _persistent_ should be released manually in case of memory leak. */
+
+JSNICallFunction(env, _callback_, _recv_, _argc_, _argv_)
+
+JSNIToCBool(env, _boolean_)
+
+JSNIToCDouble(env, _jsValue_)
+JSNIToCDouble(env, _jsValue_)
+JSNIToCDouble(env, _jsValue_)
+JSNIToCDouble(env, _jsValue_)
+
+JSNIIsNumber(env, _jsValue_)
+JSNIIsNumber(env, _jsValue_)
+JSNIIsObject(env, _jsValue_)
+JSNIIsSymbol(env, _jsValue_)
+JSNIIsUndefined(env, _jsValue_)
+JSNIIsNull(env, _jsValue_)
+JSNIIsBoolean(env, _jsValue_)
+JSNIIsNumber(env, _jsValue_)
+JSNIIsString(env, _jsValue_)
+JSNIIsFunction(env, _jsValue_)
+JSNIIsArray(env, _jsValue_)
+JSNIIsTypedArray(env, _jsValue_)
+
+JSNIIsEmpty(env, _jsValue_)
+
+#define JSNIARGS(x) JSNIGetArgOfCallback(env, info, x)
+JSNIARGS(i)
+#define JSNIARGS(x) JSNIGetArgOfCallback(env, info, x)
+JSNIARGS(0)
+JSNIGetArgsLengthOfCallback(env, info)
+JSNIGetThisOfCallback(env, info)
+JSNIGetThisOfCallback(env, info)
+true/* We do not support IsConstructCall api*/
+
+JSValueRef object = _value_
+
+(_value_)
+(_value_)
+
+# Handle scopes
+void Native(JSNIEnv* env, const JSNICallbackInfo  info) {
+    JSNIPushLocalScope(env);
+    _some_code_here;
+    JSNIPopLocalScope(env);
+}
+void Native(JSNIEnv* env, const JSNICallbackInfo  info) {
+    JSNIPushEscapableLocalScope(env);
+    _some_code_here;
+    JSNIPopEscapableLocalScope(env);
+}
+
+{
+JSNIHasException(env);
+printf("Fatal error: %s", __func__);exit(1);
+}
+
+JSValueRef string = JSNINewStringFromUtf8(env, "Hello world!", -1)
+
+# Class
+#ifndef CLASS_JSNI_OBJECT_WRAP
+#define CLASS_JSNI_OBJECT_WRAP
+class jsniObjectWrap
+{
+public:
+    jsniObjectWrap() {}
+    // Must be virtual deconstructor becuase this is base class.
+    virtual ~jsniObjectWrap() {}
+    template <class T>
+    static inline T* Unwrap(JSNIEnv* env, JSValueRef handle) {
+        assert(!JSNIIsEmpty(env, handle));
+        JSValueRef wrap_object = JSNIGetProperty(env, handle, "__wrap_object__");
+        void* ptr = JSNIGetInternalField(env, wrap_object, 0);
+        jsniObjectWrap* wrap = static_cast<jsniObjectWrap*>(ptr);
+        return static_cast<T*>(wrap);
+    }
+    void Wrap(JSNIEnv* env, JSValueRef handle) {
+        assert(global_hanlde_ == nullptr);
+        // Use jsni push/pop to save handles using.
+        // It may happen that the *handle* has no internal field, so use wrap again.
+        JSValueRef wrap_object = JSNINewObjectWithInternalField(env, 1);
+        JSNISetInternalField(env, wrap_object, 0, this);
+        JSNISetProperty(env, handle, "__wrap_object__", wrap_object);
+
+        global_hanlde_ = JSNINewGlobalValue(env, wrap_object);
+        JSNISetGCCallback(env, global_hanlde_, this, WeakCallback);
+    }
+    JSValueRef handle(JSNIEnv* env) {
+        assert(global_hanlde_ != nullptr);
+        return JSNIGetGlobalValue(env, global_hanlde_);
+    }
+private:
+    static void WeakCallback(JSNIEnv* env, void* data) {
+        jsniObjectWrap* wrap = reinterpret_cast<jsniObjectWrap*>(data);
+        // No need to release global_hanlde_ here, because jsni has handled it for you.
+        delete wrap;
+    }
+    JSGlobalValueRef global_hanlde_ = nullptr;
+};
+#endif
+
+class MyObject : public jsniObjectWrap { }
+obj->Wrap(env, JSNIGetThisOfCallback(env, info))
+jsniObjectWrap::Unwrap<MyObject>(env, JSNIGetThisOfCallback(env, info))
+
+JSValueRef tpl = JSNINewFunction(env, _new_)
+//We do not support the function:tpl->SetClassName(JSNINewStringFromUtf8(env, "MyObject"), -1)
+tpl
+JSNISetProperty(env, _object_, "MyObject", _function_);
+
+# Array
+JSNIGetArrayLength(env, nameArrayname)
+JSNIGetArrayElement(env, nameArrayname, i)
+
+# Exception
+JSNIThrowRangeErrorException(env, "RangeError")
+JSNIThrowErrorException(env, "ReferenceError")
+JSNIThrowErrorException(env, "SyntaxError")
+JSNIThrowTypeErrorException(env, "TypeError")
+JSNIThrowErrorException(env, "Error")
+

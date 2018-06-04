@@ -1,0 +1,108 @@
+#include <node.h>
+#include <v8.h>
+#include <node_object_wrap.h>
+using namespace node;
+using namespace v8;
+v8::Isolate* isolate = args.GetIsolate();
+
+# addon specific
+NODE_MODULE(NODE_GYP_MODULE_NAME, init)
+NODE_SET_METHOD(exports, "hello", Method);
+
+# common apis
+void Native(const FunctionCallbackInfo<Value>& info)
+
+Local<Object> object
+Local<Value> value
+Handle<Value> value
+Handle<Function> a, Handle<Function> b
+Local<Value> a, Local<Value> b
+
+args.GetReturnValue().Set(_result_)
+
+Null(isolate)
+Object::New(isolate)
+Number::New(isolate, 100.01)
+Boolean::New(isolate, true)
+Array::New(isolate, 100)
+Local<Value>::New(isolate, _persistent_)
+
+Persistent<Value> global
+_persistent_.Reset(isolate, _value_)
+
+MakeCallback(isolate, _recv_, _callback_, _argc_, _argv_)
+
+_boolean_->BooleanValue()
+
+_jsValue_->Int32Value()
+_jsValue_->NumberValue()
+_jsValue_->IntegerValue()
+_jsValue_->Uint32Value()
+
+_jsValue_->IsInt32()
+_jsValue_->IsUint32()
+_jsValue_->IsObject()
+_jsValue_->IsSymbol()
+_jsValue_->IsUndefined()
+_jsValue_->IsNull()
+_jsValue_->IsBoolean()
+_jsValue_->IsNumber()
+_jsValue_->IsString()
+_jsValue_->IsFunction()
+_jsValue_->IsArray()
+_jsValue_->IsTypedArray()
+
+_jsValue_.IsEmpty()
+
+args[i]
+args[0]
+args.Length()
+args.This()
+args.Holder()
+args.IsConstructCall()
+
+Isolate* isolate = Isolate::GetCurrent()
+Local<Object> object = _value_->ToObject()
+
+Local<String>::Cast(_value_)
+Handle<String>::Cast(_value_)
+
+# Handle scopes
+void Native(const FunctionCallbackInfo<Value>& info) {
+    HandleScope hs(isolate);
+    _some_code_here;
+}
+void Native(const FunctionCallbackInfo<Value>& info) {
+    EscapableHandleScope ehs(isolate);
+    _some_code_here;
+}
+
+{
+TryCatch try_catch(solate);
+try_catch.HasCaught();
+node::FatalException(try_catch);
+}
+
+Local<String> string = String::NewFromUtf8(isolate, "Hello world!")
+
+# Class
+class MyObject : public node::ObjectWrap { }
+obj->Wrap(args.This())
+ObjectWrap::Unwrap<MyObject>(args.Holder())
+
+Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, _new_)
+tpl->SetClassName(String::NewFromUtf8(isolate, "MyObject"))
+tpl->GetFunction()
+_object_->Set(String::NewFromUtf8(isolate, "MyObject"), _function_)
+
+# Array
+nameArrayname->Length()
+nameArrayname->Get(i)
+
+# Exception
+isolate->ThrowException(Exception::RangeError(String::NewFromUtf8(isolate, "RangeError")))
+isolate->ThrowException(Exception::ReferenceError(String::NewFromUtf8(isolate, "ReferenceError")))
+isolate->ThrowException(Exception::SyntaxError(String::NewFromUtf8(isolate, "SyntaxError")))
+isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "TypeError")))
+isolate->ThrowException(Exception::Error(String::NewFromUtf8(isolate, "Error")))
+
