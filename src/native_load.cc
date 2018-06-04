@@ -29,6 +29,7 @@
 #include "jsni-internal.h"
 
 #include <dlfcn.h>
+#include <string>
 #include <unordered_map>
 
 using namespace v8;

@@ -4,6 +4,9 @@ jsni is the interface for JavaScript and C/C++, which is vm neutral and keeps ab
 It is acronym for JavaScript Native Interface.
 
 ## Usage
+### Required
+It is required that the node version is v7.0.0 or higher.
+
 First, prepare your addon written by jsni. Here are [examples](https://github.com/alibaba/jsni/tree/example).
 
 Second, install jsni using npm:
