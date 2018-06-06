@@ -79,7 +79,7 @@ void NativeLoad(const FunctionCallbackInfo<Value>& args) {
                               isolate,
                               "__jsni_env__", NewStringType::kNormal
                               ).ToLocalChecked();
-    Local<External> jsni = global->Get(context, jsni_name).ToLocalChecked().As<External>();
+    Local<Value> jsni = global->Get(context, jsni_name).ToLocalChecked();
     JSNIEnvExt* jsni_env = nullptr;
     if (jsni->IsUndefined()) {
       jsni_env = JSNIEnvExt::Create(isolate);
@@ -88,7 +88,7 @@ void NativeLoad(const FunctionCallbackInfo<Value>& args) {
       Persistent<Value> jsni_persistent(isolate, jsni_external);
       jsni_persistent.SetWeak(jsni_env, JSNIEnvGCCallback, WeakCallbackType::kParameter);
     } else {
-      jsni_env = reinterpret_cast<JSNIEnvExt*>(jsni->Value());
+      jsni_env = reinterpret_cast<JSNIEnvExt*>(jsni.As<External>()->Value());
     }
     JSNIInitFn jsni_init = reinterpret_cast<JSNIInitFn>(ptr);
     JSValueRef exports = reinterpret_cast<JSValueRef>(*native_exports);

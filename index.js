@@ -25,7 +25,9 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var jsni = {};
 
-var nativeLoad = require("./build/Release/nativeLoad").nativeLoad;
+buildType = process.config.target_defaults.default_configuration;
+
+var nativeLoad = require("./build/" + buildType + "/nativeLoad").nativeLoad;
 
 function tryComplete(filename) {
   return filename + '.node';
@@ -35,8 +37,7 @@ jsni.nativeLoad = function(filename) {
   const Module = require("module");
   var workPath = process.cwd();
   searchPaths = [
-    workPath + "/build/Release/",
-    workPath + "/build/Debug/"
+    workPath + "/build/" + buildType,
   ]
   var filename_resolved = Module._findPath(filename);
 
