@@ -35,7 +35,7 @@ function tryComplete(filename) {
 
 jsni.nativeLoad = function(filename) {
   const Module = require("module");
-  var workPath = process.cwd();
+  var workPath = require('path').dirname(process.argv[1]);
   searchPaths = [
     workPath + "/build/" + buildType,
   ]
