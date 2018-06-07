@@ -4,20 +4,36 @@ jsni is the interface for JavaScript and C/C++, which is vm neutral and keeps ab
 It is acronym for JavaScript Native Interface.
 
 ## Usage
-### Required
-It is required that the node version is v7.0.0 or higher.
+Prerequisites:
+  * node 7.x or above
+  * npm
 
-First, prepare your addon written by jsni. Here are [examples](https://github.com/alibaba/jsni/tree/example).
+We can try jsni beginning with the [hello-world](https://github.com/alibaba/jsni/tree/example) example.
+
+First, clone it to your local machine.
+
+    git clone https://github.com/alibaba/jsni.git -b example
 
 Second, install jsni using npm:
 
-    npm install jsni --save
+    cd jsni/hello-world/
+    npm install jsni
 
-Then, require the jsni package and use it like this:
+Finnally we can build and run it:
+
+    node-gyp rebuild
+    node test.js
+
+And it will show "hello".
+
+The essential JavaScript code is like this:
 
     var jsni = require("jsni");
     var addon = nativeLoad("addon");
     console.log(addon.hello());
+
+## Collaborators
+* **Jin Yue** &lt;jinyue.derek@gmail.com&gt;
 
 ## License
 BSD-3-Clause
