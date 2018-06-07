@@ -55,13 +55,19 @@ jsni.nativeLoad = function(filename) {
       throw err;
     }
   }
-
+  var cacheNativeModule = jsni._cache[filename_resolved];
+  if(cacheNativeModule) {
+    return cacheNativeModule;
+  }
   var native_exports = {};
+  jsni._cache[filename_resolved] = native_exports;
   nativeLoad(native_exports, filename_resolved);
   return native_exports;
 };
 
 jsni.include = '"' + __dirname + "/src/" + '"';
+
+jsni._cache = Object.create(null);
 
 global.nativeLoad = jsni.nativeLoad
 
