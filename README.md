@@ -34,6 +34,7 @@ The essential JavaScript code is like this:
 
 ## Collaborators
 * **Jin Yue** &lt;jinyue.derek@gmail.com&gt;
+* **hyj1991** &lt;66cfat66@gmail.com&gt;
 
 ## License
 BSD-3-Clause
