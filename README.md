@@ -32,6 +32,9 @@ The essential JavaScript code is like this:
     var addon = nativeLoad("addon");
     console.log(addon.hello());
 
+## Documentation
+[API Reference](https://alibaba.github.io/jsni/2.2/html/jsni_8h.html)
+
 ## Collaborators
 * **Jin Yue** &lt;jinyue.derek@gmail.com&gt;
 * **hyj1991** &lt;66cfat66@gmail.com&gt;
