@@ -27,17 +27,17 @@ var jsni = {};
 
 buildType = process.config.target_defaults.default_configuration;
 
-var nativeLoad = require("./build/" + buildType + "/nativeLoad").nativeLoad;
+var nativeLoad = require('./build/' + buildType + '/nativeLoad').nativeLoad;
 
 function tryComplete(filename) {
   return filename + '.node';
 }
 
 jsni.nativeLoad = function(filename) {
-  const Module = require("module");
+  const Module = require('module');
   var workPath = require('path').dirname(process.argv[1]);
   searchPaths = [
-    workPath + "/build/" + buildType,
+    workPath + '/build/' + buildType,
   ]
   var filename_resolved = Module._findPath(filename);
 
@@ -49,9 +49,9 @@ jsni.nativeLoad = function(filename) {
 
     if (!filename_resolved) {
       var err = new Error(
-        "Cannot find module '" + filename
-        + "' under: " + searchPaths);
-      err.code = "NATIVE_MODULE_NOT_FOUND";
+        'Cannot find module "' + filename
+        + '" under: ' + searchPaths);
+      err.code = 'NATIVE_MODULE_NOT_FOUND';
       throw err;
     }
   }
@@ -65,7 +65,7 @@ jsni.nativeLoad = function(filename) {
   return native_exports;
 };
 
-jsni.include = '"' + __dirname + "/src/" + '"';
+jsni.include = '"' + __dirname + '/src/' + '"';
 
 jsni._cache = Object.create(null);
 
