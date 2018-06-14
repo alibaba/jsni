@@ -27,7 +27,8 @@ var jsni = {};
 
 buildType = process.config.target_defaults.default_configuration;
 
-var nativeLoad = require('./build/' + buildType + '/nativeLoad').nativeLoad;
+// use absolute path to avoid test fail.
+var nativeLoad = require(__dirname + '/build/' + buildType + '/nativeLoad').nativeLoad;
 
 function tryComplete(filename) {
   return filename + '.node';
