@@ -6,10 +6,9 @@
       "include_dirs": [
         "<!@(node -p \"require('../index').include\")"
       ],
-      'dependencies': ["../binding.gyp:jsni"],
-      # "ldflags": [
-      #   "-Wl,-rpath,'$$ORIGIN'"
-      # ],
+      "libraries": [
+        "<(module_root_dir)/../build/<!@(node -p \"process.config.target_defaults.default_configuration\")/jsni.a"
+      ],
     }
 
   ]
