@@ -1,6 +1,8 @@
 # jsni
 jsni is the interface for JavaScript and C/C++, which is vm neutral and keeps abi/api compatible.
 
+So the developers can avoid rewriting their native modules once v8/nan or other vms api changes.
+
 It is acronym for JavaScript Native Interface.
 
 ## Usage
