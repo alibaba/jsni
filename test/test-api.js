@@ -272,6 +272,7 @@ function needDumpReport() {
   if (process.argv[2] != undefined) {
     return process.argv[2].includes('dump');
   }
+  return false;
 }
 
 function runTest(test) {
