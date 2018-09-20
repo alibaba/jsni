@@ -190,6 +190,24 @@ TEST(ObjectCheck) {
   }
 }
 
+TEST(NewError) {
+  JSValueRef error = JSNINewError(env, "error!!!");
+  assert(JSNIIsError(env, error));
+  JSNIThrowErrorObject(env, error);
+}
+
+TEST(NewTypeError) {
+  JSValueRef error = JSNINewTypeError(env, "type error!!!");
+  assert(JSNIIsError(env, error));
+  JSNIThrowErrorObject(env, error);
+}
+
+TEST(NewRangeError) {
+  JSValueRef error = JSNINewRangeError(env, "range error!!!");
+  assert(JSNIIsError(env, error));
+  JSNIThrowErrorObject(env, error);
+}
+
 TEST(ThrowTypeError) {
   JSValueRef arg = JSNIGetArgOfCallback(env, info, 0);
   if (!JSNIIsNumber(env, arg)) {
@@ -644,6 +662,10 @@ int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(ThrowError);
   SET_METHOD(HasPendingException);
   SET_METHOD(ClearPendingException);
+  // Error
+  SET_METHOD(NewError);
+  SET_METHOD(NewTypeError);
+  SET_METHOD(NewRangeError);
   // Function
   SET_METHOD(NewNativeFunction);
   SET_METHOD(IsFunction);

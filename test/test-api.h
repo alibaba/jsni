@@ -38,3 +38,4 @@
       JSNIThrowErrorException(env, ""#conditon": JSNI api "#api" failed.");  \
     }                                                                        \
   } while(false)
+

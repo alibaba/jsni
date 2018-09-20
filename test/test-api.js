@@ -114,6 +114,25 @@ function testException() {
     console.log('No error should be catched.');
     assert(false);
   }
+
+  // Test Error creation and throw.
+  try {
+    native.testNewError();
+  } catch(error) {
+    assert(error.toString() === 'Error: error!!!');
+  }
+
+  try {
+    native.testNewRangeError();
+  } catch(error) {
+    assert(error.toString() === 'RangeError: range error!!!');
+  }
+
+  try {
+    native.testNewTypeError();
+  } catch(error) {
+    assert(error.toString() === 'TypeError: type error!!!');
+  }
 }
 
 function testFunction() {
