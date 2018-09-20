@@ -1235,3 +1235,124 @@ void JSNIClearException(JSNIEnv* env) {
     jsni_env_ext->last_exception.Reset();
   }
 }
+
+JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Value> error_obj = Exception::Error(
+    String::NewFromUtf8(
+      isolate,
+      errmsg,
+      NewStringType::kNormal).ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(error_obj));
+}
+
+JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Value> error_obj = Exception::TypeError(
+    String::NewFromUtf8(
+      isolate,
+      errmsg,
+      NewStringType::kNormal).ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(error_obj));
+}
+
+JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Value> error_obj = Exception::RangeError(
+    String::NewFromUtf8(
+      isolate,
+      errmsg,
+      NewStringType::kNormal).ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(error_obj));
+}
+
+void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  HandleScope scope(isolate);
+  isolate->ThrowException(JSNI::ToV8LocalValue(error));
+}
+
+bool JSNIIsError(JSNIEnv* env, JSValueRef val) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  HandleScope scope(isolate);
+  Local<Value> v8val = JSNI::ToV8LocalValue(val);
+  return v8val->IsNativeError();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
