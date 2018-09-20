@@ -140,7 +140,7 @@ class JSNI {
 
     size_t UnRef() {
       if (count_ == 0) {
-        LOG_E("Error: decreasing ref count when ref count is 0.");
+        LOG_E("Error: decreasing ref count when ref count is 0.\n");
         return 0;
       }
       if (--count_ == 0) {
@@ -1145,7 +1145,7 @@ JSNIErrorInfo JSNIGetLastErrorInfo(JSNIEnv* env) {
   jsni_env_ext->last_error_info.error_code = (JSNIErrorCode)err;
 
   if (err > 0) {
-    LOG_E("Error occured in JSNI!");
+    LOG_E("Error occured in JSNI!\n");
     jsni_env_ext->error_code = 0;
   }
   return jsni_env_ext->last_error_info;
