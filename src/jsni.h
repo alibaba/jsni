@@ -799,7 +799,6 @@ is no exception, this routine has no effect.
 */
 void JSNIClearException(JSNIEnv* env);
 
-
 /*! \fn
     \brief Constructs a JavaScript Error object.
     \param env The JSNI environment pointer.
@@ -816,7 +815,6 @@ JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg);
 */
 JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg);
 
-
 /*! \fn
     \brief Constructs a JavaScript RangeError object.
     \param env The JSNI environment pointer.
@@ -824,7 +822,6 @@ JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg);
     \return JavaScript RangeError Object.
 */
 JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg);
-
 
 /*! \fn
     \brief Throw JavaScript Error object.
@@ -834,7 +831,6 @@ JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg);
 */
 void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
 
-
 /*! \fn
     \brief Tests whether a JavaScript value is Error object.
     \param env The JSNI environment pointer.
@@ -843,6 +839,17 @@ void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
 */
 bool JSNIIsError(JSNIEnv* env, JSValueRef val);
 
+/*! \fn
+*/
+JSValueRef JSNINewInstance(JSNIEnv* env, JSValueRef constructor, int argc, JSValueRef* argv);
+
+/*! \fn
+*/
+bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right);
+
+/*! \fn
+*/
+JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info);
 
 
 

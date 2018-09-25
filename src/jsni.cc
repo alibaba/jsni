@@ -1287,7 +1287,41 @@ bool JSNIIsError(JSNIEnv* env, JSValueRef val) {
   return v8val->IsNativeError();
 }
 
+JSValueRef JSNINewInstance(JSNIEnv* env, JSValueRef constructor, int argc, JSValueRef* argv) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Context> context = isolate->GetCurrentContext();
+  Local<Function> constr = JSNI::ToV8LocalValue(constructor).As<Function>();
+  // We do not need new args to pass. Just modify the primary.
+  Local<Value>* new_argv = reinterpret_cast<Local<Value>*>(argv);
+  for (int i = 0; i < argc; i++) {
+    new_argv[i] = JSNI::ToV8LocalValue(argv[i]);
+  }
+  MaybeLocal<Object> new_instance = constr->NewInstance(context, argc, new_argv);
+  return JSNI::ToJSNIValue(
+    scope.Escape(new_instance.FromMaybe(Local<Value>())));
+}
 
+bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Context> context = isolate->GetCurrentContext();
+  Local<Value> left_v = JSNI::ToV8LocalValue(left);
+  Local<Object> right_v = JSNI::ToV8LocalValue(right).As<Object>();
+  return left_v->InstanceOf(context, right_v).FromMaybe(false);
+}
+
+JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info) {
+  PREPARE_API_CALL(env);
+  JSNI::JSNICallbackInfoWrap* jsni_info = reinterpret_cast<JSNI::JSNICallbackInfoWrap*>(info);
+  JSNI::JSNICallbackInfoWrap::CallbackInfoType type = jsni_info->type();
+  assert(type == JSNI::JSNICallbackInfoWrap::kFunction);
+  const FunctionCallbackInfo<Value>* v8_info =
+          reinterpret_cast<FunctionCallbackInfo<Value>*>(jsni_info->info());
+  return JSNI::ToJSNIValue(v8_info->NewTarget());
+}
 
 
 
