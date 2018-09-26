@@ -645,6 +645,12 @@ TEST(Undefined) {
   JSNISetReturnValue(env, info, undefined_val);
 }
 
+TEST(Instance) {
+  JSValueRef constr = JSNIGetArgOfCallback(env, info, 0);
+  JSValueRef instance = JSNINewInstance(env, constr, 0, nullptr);
+  assert(JSNIInstanceOf(env, instance, constr));
+}
+
 int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(Version);
   SET_METHOD(Array);
@@ -706,6 +712,8 @@ int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(IsExternailized);
   // Undefined
   SET_METHOD(Undefined);
+  // Instance
+  SET_METHOD(Instance);
 
   return JSNI_VERSION_2_1;
 }

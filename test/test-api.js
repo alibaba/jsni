@@ -241,6 +241,12 @@ function testUndefined() {
   assert(native.testUndefined() === undefined);
 }
 
+function testInstance() {
+  function constructor () {
+  }
+  native.testInstance(constructor);
+}
+
 var test_cases = [
   testInNativeOnly,
   testArray,
@@ -259,6 +265,7 @@ var test_cases = [
   testSymbol,
   testTypedArray,
   testUndefined,
+  testInstance,
 ];
 
 var report = {

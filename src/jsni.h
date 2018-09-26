@@ -308,7 +308,7 @@ double JSNIToCDouble(JSNIEnv* env, JSValueRef val);
     \param env The JSNI environment pointer.
     \param val A JavaScript value.
     \return Returns the int32 value.
-    \since JSNI 2.2
+    \since JSNI 2.2.
 */
 int32_t JSNIToInt32(JSNIEnv* env, JSValueRef val);
 
@@ -317,7 +317,7 @@ int32_t JSNIToInt32(JSNIEnv* env, JSValueRef val);
     \param env The JSNI environment pointer.
     \param val A JavaScript value.
     \return Returns the uint32 value.
-    \since JSNI 2.2
+    \since JSNI 2.2.
 */
 uint32_t JSNIToUint32(JSNIEnv* env, JSValueRef val);
 
@@ -326,7 +326,7 @@ uint32_t JSNIToUint32(JSNIEnv* env, JSValueRef val);
     \param env The JSNI environment pointer.
     \param val A JavaScript value.
     \return Returns the int64 value.
-    \since JSNI 2.2
+    \since JSNI 2.2.
 */
 int64_t JSNIToInt64(JSNIEnv* env, JSValueRef val);
 
@@ -392,7 +392,7 @@ size_t JSNIGetStringUtf8Chars(JSNIEnv* env, JSValueRef string, char* copy, size_
     \param length The length of string to be created. It should exclude the null terminator.
     If length equals -1, it will use the length of src.
     \return Returns a String value, or NULL if the string can not be constructed.
-    \since JSNI 2.2
+    \since JSNI 2.2.
 */
 JSValueRef JSNINewString(JSNIEnv* env, const uint16_t* src, size_t length);
 
@@ -401,7 +401,7 @@ JSValueRef JSNINewString(JSNIEnv* env, const uint16_t* src, size_t length);
     \param env The JSNI environment pointer.
     \param string A JavaScript string value.
     \return Returns the number of charaters in this string.
-    \since JSNI 2.2
+    \since JSNI 2.2.
 */
 size_t JSNIGetStringLength(JSNIEnv* env, JSValueRef string);
 
@@ -413,7 +413,7 @@ size_t JSNIGetStringLength(JSNIEnv* env, JSValueRef string);
     \param length The length to copy.
     If length equals -1, it will use the length of string.
     \return Returns the size of copied.
-    \since JSNI 2.2
+    \since JSNI 2.2.
 */
 size_t JSNIGetString(JSNIEnv* env, JSValueRef string, uint16_t* copy, size_t length);
 
@@ -711,7 +711,7 @@ be garbage collected.
     \param env The JSNI environment pointer.
     \param val A JSGlobalValueRef value.
     \return The reference count.
-    \since JSNI 2.1
+    \since JSNI 2.1.
 */
 size_t JSNIAcquireGlobalValue(JSNIEnv* env, JSGlobalValueRef val);
 
@@ -722,7 +722,7 @@ be garbage collected.
     \param env The JSNI environment pointer.
     \param val A JSGlobalValueRef value.
     \return The reference count.
-    \since JSNI 2.1
+    \since JSNI 2.1.
 */
 size_t JSNIReleaseGlobalValue(JSNIEnv* env, JSGlobalValueRef val);
 
@@ -804,6 +804,7 @@ void JSNIClearException(JSNIEnv* env);
     \param env The JSNI environment pointer.
     \param errmsg An error message.
     \return JavaScript Error Object.
+    \since JSNI 2.3.
 */
 JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg);
 
@@ -812,6 +813,7 @@ JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg);
     \param env The JSNI environment pointer.
     \param errmsg An error message.
     \return JavaScript TypeError Object.
+    \since JSNI 2.3.
 */
 JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg);
 
@@ -820,6 +822,7 @@ JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg);
     \param env The JSNI environment pointer.
     \param errmsg An error message.
     \return JavaScript RangeError Object.
+    \since JSNI 2.3.
 */
 JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg);
 
@@ -828,6 +831,7 @@ JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg);
     \param env The JSNI environment pointer.
     \param error JavaScript Error Object.
     \return None.
+    \since JSNI 2.3.
 */
 void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
 
@@ -836,6 +840,7 @@ void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
     \param env The JSNI environment pointer.
     \param val A JavaScript Value.
     \return Returns true if val is an Error object.
+    \since JSNI 2.3.
 */
 bool JSNIIsError(JSNIEnv* env, JSValueRef val);
 
@@ -898,6 +903,11 @@ struct _JSNIEnv {
     \brief JSNI version 2.2.
 */
 #define JSNI_VERSION_2_2 0x00020002
+
+/*! \def JSNI_VERSION_2_3
+    \brief JSNI version 2.3.
+*/
+#define JSNI_VERSION_2_3 0x00020003
 
 #if defined(__cplusplus)
 extern "C" {
