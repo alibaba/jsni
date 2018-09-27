@@ -651,6 +651,19 @@ TEST(Instance) {
   assert(JSNIInstanceOf(env, instance, constr));
 }
 
+TEST(NewTarget) {
+  JSValueRef new_target = JSNIGetNewTarget(env, info);
+  JSNISetReturnValue(env, info, new_target);
+}
+
+TEST(StrictEquals) {
+  JSValueRef args_0 = JSNIGetArgOfCallback(env, info, 0);
+  JSValueRef args_1 = JSNIGetArgOfCallback(env, info, 1);
+  JSValueRef args_2 = JSNIGetArgOfCallback(env, info, 2);
+  assert(JSNIStrictEquals(env, args_0, args_1));
+  assert(!JSNIStrictEquals(env, args_0, args_2));
+}
+
 int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(Version);
   SET_METHOD(Array);
@@ -714,8 +727,12 @@ int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(Undefined);
   // Instance
   SET_METHOD(Instance);
+  // NewTarget
+  SET_METHOD(NewTarget);
+  // StrictEquals
+  SET_METHOD(StrictEquals);
 
-  return JSNI_VERSION_2_1;
+  return JSNI_VERSION_2_3;
 }
 
 

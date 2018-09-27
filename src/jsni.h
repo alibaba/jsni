@@ -856,7 +856,9 @@ bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right);
 */
 JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info);
 
-
+/*! \fn
+*/
+bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right);
 
 
 

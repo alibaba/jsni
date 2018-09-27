@@ -1323,7 +1323,12 @@ JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info) {
   return JSNI::ToJSNIValue(v8_info->NewTarget());
 }
 
-
+bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right) {
+  PREPARE_API_CALL(env);
+  Local<Value> l = JSNI::ToV8LocalValue(left);
+  Local<Value> r = JSNI::ToV8LocalValue(right);
+  return l->StrictEquals(r);
+}
 
 
 

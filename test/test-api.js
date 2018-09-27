@@ -247,6 +247,19 @@ function testInstance() {
   native.testInstance(constructor);
 }
 
+function testNewTarget() {
+  var constr = native.testNewTarget;
+  var newTarget = new constr();
+  assert(constr == newTarget);
+}
+
+function testStrictEquals() {
+  var val0 = '0';
+  var val1 = '0';
+  var val2 = 0;
+  native.testStrictEquals(val0, val1, val2);
+}
+
 var test_cases = [
   testInNativeOnly,
   testArray,
@@ -266,6 +279,8 @@ var test_cases = [
   testTypedArray,
   testUndefined,
   testInstance,
+  testNewTarget,
+  testStrictEquals,
 ];
 
 var report = {
