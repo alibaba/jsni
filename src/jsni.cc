@@ -140,7 +140,7 @@ class JSNI {
 
     size_t UnRef() {
       if (count_ == 0) {
-        LOG_E("Error: decreasing ref count when ref count is 0.");
+        LOG_E("Error: decreasing ref count when ref count is 0.\n");
         return 0;
       }
       if (--count_ == 0) {
@@ -1145,7 +1145,7 @@ JSNIErrorInfo JSNIGetLastErrorInfo(JSNIEnv* env) {
   jsni_env_ext->last_error_info.error_code = (JSNIErrorCode)err;
 
   if (err > 0) {
-    LOG_E("Error occured in JSNI!");
+    LOG_E("Error occured in JSNI!\n");
     jsni_env_ext->error_code = 0;
   }
   return jsni_env_ext->last_error_info;
@@ -1234,4 +1234,142 @@ void JSNIClearException(JSNIEnv* env) {
   } else {
     jsni_env_ext->last_exception.Reset();
   }
+}
+
+JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Value> error_obj = Exception::Error(
+    String::NewFromUtf8(
+      isolate,
+      errmsg,
+      NewStringType::kNormal).ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(error_obj));
+}
+
+JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Value> error_obj = Exception::TypeError(
+    String::NewFromUtf8(
+      isolate,
+      errmsg,
+      NewStringType::kNormal).ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(error_obj));
+}
+
+JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Value> error_obj = Exception::RangeError(
+    String::NewFromUtf8(
+      isolate,
+      errmsg,
+      NewStringType::kNormal).ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(error_obj));
+}
+
+void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  HandleScope scope(isolate);
+  isolate->ThrowException(JSNI::ToV8LocalValue(error));
+}
+
+bool JSNIIsError(JSNIEnv* env, JSValueRef val) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  HandleScope scope(isolate);
+  Local<Value> v8val = JSNI::ToV8LocalValue(val);
+  return v8val->IsNativeError();
+}
+
+JSValueRef JSNINewInstance(JSNIEnv* env, JSValueRef constructor, int argc, JSValueRef* argv) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Context> context = isolate->GetCurrentContext();
+  Local<Function> constr = JSNI::ToV8LocalValue(constructor).As<Function>();
+  // We do not need new args to pass. Just modify the primary.
+  Local<Value>* new_argv = reinterpret_cast<Local<Value>*>(argv);
+  for (int i = 0; i < argc; i++) {
+    new_argv[i] = JSNI::ToV8LocalValue(argv[i]);
+  }
+  MaybeLocal<Object> new_instance = constr->NewInstance(context, argc, new_argv);
+  return JSNI::ToJSNIValue(
+    scope.Escape(new_instance.FromMaybe(Local<Value>())));
+}
+
+bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Context> context = isolate->GetCurrentContext();
+  Local<Value> left_v = JSNI::ToV8LocalValue(left);
+  Local<Object> right_v = JSNI::ToV8LocalValue(right).As<Object>();
+  return left_v->InstanceOf(context, right_v).FromMaybe(false);
+}
+
+JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info) {
+  PREPARE_API_CALL(env);
+  JSNI::JSNICallbackInfoWrap* jsni_info = reinterpret_cast<JSNI::JSNICallbackInfoWrap*>(info);
+  JSNI::JSNICallbackInfoWrap::CallbackInfoType type = jsni_info->type();
+  assert(type == JSNI::JSNICallbackInfoWrap::kFunction);
+  const FunctionCallbackInfo<Value>* v8_info =
+          reinterpret_cast<FunctionCallbackInfo<Value>*>(jsni_info->info());
+  return JSNI::ToJSNIValue(v8_info->NewTarget());
+}
+
+bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right) {
+  PREPARE_API_CALL(env);
+  Local<Value> l = JSNI::ToV8LocalValue(left);
+  Local<Value> r = JSNI::ToV8LocalValue(right);
+  return l->StrictEquals(r);
+}
+
+JSValueRef JSNINewArrayBuffer(JSNIEnv* env, size_t length){
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  Local<ArrayBuffer> buffer = ArrayBuffer::New(isolate, length);
+  return JSNI::ToJSNIValue(buffer);
+}
+
+JSValueRef JSNINewArrayBufferExternalized(JSNIEnv* env, void* data, size_t length){
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  Local<ArrayBuffer> buffer = ArrayBuffer::New(isolate, data, length);
+  return JSNI::ToJSNIValue(buffer);
+}
+
+bool JSNIIsArrayBuffer(JSNIEnv* env, JSValueRef val){
+  PREPARE_API_CALL(env);
+  Local<Value> value = JSNI::ToV8LocalValue(val);
+  return value->IsArrayBuffer();
+}
+
+void* JSNIGetArrayBufferData(JSNIEnv* env, JSValueRef val){
+  PREPARE_API_CALL(env);
+  Local<ArrayBuffer> buffer = JSNI::ToV8LocalValue(val).As<ArrayBuffer>();
+  ArrayBuffer::Contents contents = buffer->GetContents();
+  return contents.Data();
+}
+
+size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val){
+  PREPARE_API_CALL(env);
+  Local<ArrayBuffer> buffer = JSNI::ToV8LocalValue(val).As<ArrayBuffer>();
+  ArrayBuffer::Contents contents = buffer->GetContents();
+  return contents.ByteLength();
+}
+
+JSValueRef JSNIGetPropertyNames(JSNIEnv* env, JSValueRef val) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Context> context = isolate->GetCurrentContext();
+  Local<Object> object = JSNI::ToV8LocalValue(val).As<Object>();
+  MaybeLocal<Array> names = object->GetPropertyNames(context);
+  return JSNI::ToJSNIValue(names.ToLocalChecked());
 }
