@@ -845,20 +845,95 @@ void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
 bool JSNIIsError(JSNIEnv* env, JSValueRef val);
 
 /*! \fn
+    \brief New an instance from a constructor.
+    \param env The JSNI environment pointer.
+    \param constructor The JavaScript function to be invoked as a constructor.
+    \param argc The argument number to be passed to constructor.
+    \param argv The argument array pointer to be passed to constructor.
+    \return 
+    \since JSNI 2.3.
 */
 JSValueRef JSNINewInstance(JSNIEnv* env, JSValueRef constructor, int argc, JSValueRef* argv);
 
 /*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
 */
 bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right);
 
 /*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
 */
 JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info);
 
 /*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
 */
 bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right);
+
+/*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
+*/
+JSValueRef JSNINewArrayBuffer(JSNIEnv* env, size_t length);
+
+/*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
+*/
+JSValueRef JSNINewArrayBufferExternalized(JSNIEnv* env, void* data, size_t length);
+
+/*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
+*/
+bool JSNIIsArrayBuffer(JSNIEnv* env, JSValueRef val);
+
+/*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
+*/
+void* JSNIGetArrayBufferData(JSNIEnv* env, JSValueRef val);
+
+/*! \fn
+    \brief
+    \param env The JSNI environment pointer.
+    \param
+    \param
+    \return
+    \since JSNI 2.3.
+*/
+size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val);
 
 
 

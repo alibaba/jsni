@@ -664,6 +664,17 @@ TEST(StrictEquals) {
   assert(!JSNIStrictEquals(env, args_0, args_2));
 }
 
+TEST(ArrayBuffer) {
+  JSValueRef abuffer = JSNINewArrayBuffer(env, 8);
+  API_ASSERT_S(JSNIIsArrayBuffer(env, abuffer));
+  API_ASSERT_S(JSNIGetArrayBufferLength(env, abuffer) == 8);
+  char data[2] = {0};
+  JSValueRef abuffer2 = JSNINewArrayBufferExternalized(env, static_cast<void*>(data), 10);
+  API_ASSERT_S(JSNIIsArrayBuffer(env, abuffer2));
+  API_ASSERT_S(JSNIGetArrayBufferLength(env, abuffer2) == 10);
+  API_ASSERT_S(JSNIGetArrayBufferData(env, abuffer2) == data);
+}
+
 int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(Version);
   SET_METHOD(Array);
@@ -731,6 +742,8 @@ int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(NewTarget);
   // StrictEquals
   SET_METHOD(StrictEquals);
+  // ArrayBuffer
+  SET_METHOD(ArrayBuffer);
 
   return JSNI_VERSION_2_3;
 }

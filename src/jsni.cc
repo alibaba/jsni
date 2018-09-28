@@ -1330,7 +1330,39 @@ bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right) {
   return l->StrictEquals(r);
 }
 
+JSValueRef JSNINewArrayBuffer(JSNIEnv* env, size_t length){
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  Local<ArrayBuffer> buffer = ArrayBuffer::New(isolate, length);
+  return JSNI::ToJSNIValue(buffer);
+}
 
+JSValueRef JSNINewArrayBufferExternalized(JSNIEnv* env, void* data, size_t length){
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  Local<ArrayBuffer> buffer = ArrayBuffer::New(isolate, data, length);
+  return JSNI::ToJSNIValue(buffer);
+}
+
+bool JSNIIsArrayBuffer(JSNIEnv* env, JSValueRef val){
+  PREPARE_API_CALL(env);
+  Local<Value> value = JSNI::ToV8LocalValue(val);
+  return value->IsArrayBuffer();
+}
+
+void* JSNIGetArrayBufferData(JSNIEnv* env, JSValueRef val){
+  PREPARE_API_CALL(env);
+  Local<ArrayBuffer> buffer = JSNI::ToV8LocalValue(val).As<ArrayBuffer>();
+  ArrayBuffer::Contents contents = buffer->GetContents();
+  return contents.Data();
+}
+
+size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val){
+  PREPARE_API_CALL(env);
+  Local<ArrayBuffer> buffer = JSNI::ToV8LocalValue(val).As<ArrayBuffer>();
+  ArrayBuffer::Contents contents = buffer->GetContents();
+  return contents.ByteLength();
+}
 
 
 

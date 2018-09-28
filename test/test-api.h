@@ -32,10 +32,22 @@
 #define SET_METHOD(method) \
   JSNIRegisterMethod(env, exports, "test"#method, Test##method)
 
+// If assert failed, we throw js error and return immediately.
 #define API_ASSERT(conditon, api)  \
   do {                                                                       \
     if (!(conditon)) {                                                       \
       JSNIThrowErrorException(env, ""#conditon": JSNI api "#api" failed.");  \
+      return;                                                                \
     }                                                                        \
   } while(false)
 
+// simple version.
+#define API_ASSERT_S(conditon)  \
+  do {                                                                       \
+    if (!(conditon)) {                                                       \
+      JSNIThrowErrorException(env, ""#conditon": JSNI api failed.");  \
+      return;                                                                \
+    }                                                                        \
+  } while(false)
+
+#define assert(x) API_ASSERT_S(x)

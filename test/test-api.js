@@ -260,6 +260,10 @@ function testStrictEquals() {
   native.testStrictEquals(val0, val1, val2);
 }
 
+function testArrayBuffer() {
+  native.testArrayBuffer();
+}
+
 var test_cases = [
   testInNativeOnly,
   testArray,
@@ -281,6 +285,7 @@ var test_cases = [
   testInstance,
   testNewTarget,
   testStrictEquals,
+  testArrayBuffer,
 ];
 
 var report = {
