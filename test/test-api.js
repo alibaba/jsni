@@ -264,6 +264,15 @@ function testArrayBuffer() {
   native.testArrayBuffer();
 }
 
+function testGetPropertyNames() {
+  var object = {name1:1, name2:2};
+  var namesArray = native.testGetPropertyNames(object);
+  var testNamesArray = [ 'name1', 'name2' ];
+  for (var i = namesArray.length - 1; i >= 0; i--) {
+    assert(namesArray[i] == testNamesArray[i]);
+  }
+}
+
 var test_cases = [
   testInNativeOnly,
   testArray,
@@ -286,6 +295,7 @@ var test_cases = [
   testNewTarget,
   testStrictEquals,
   testArrayBuffer,
+  testGetPropertyNames,
 ];
 
 var report = {

@@ -1364,66 +1364,12 @@ size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val){
   return contents.ByteLength();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+JSValueRef JSNIGetPropertyNames(JSNIEnv* env, JSValueRef val) {
+  PREPARE_API_CALL(env);
+  Isolate* isolate = JSNI::GetIsolate(env);
+  EscapableHandleScope scope(isolate);
+  Local<Context> context = isolate->GetCurrentContext();
+  Local<Object> object = JSNI::ToV8LocalValue(val).As<Object>();
+  MaybeLocal<Array> names = object->GetPropertyNames(context);
+  return JSNI::ToJSNIValue(names.ToLocalChecked());
+}

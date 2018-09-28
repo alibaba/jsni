@@ -675,6 +675,12 @@ TEST(ArrayBuffer) {
   API_ASSERT_S(JSNIGetArrayBufferData(env, abuffer2) == data);
 }
 
+TEST(GetPropertyNames) {
+  JSValueRef object = JSNIGetArgOfCallback(env, info, 0);
+  JSValueRef names_array = JSNIGetPropertyNames(env, object);
+  JSNISetReturnValue(env, info, names_array);
+}
+
 int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   SET_METHOD(Version);
   SET_METHOD(Array);
@@ -725,6 +731,7 @@ int JSNIInit(JSNIEnv* env, JSValueRef exports) {
   // Property
   SET_METHOD(DefineProperty);
   SET_METHOD(DefineProperty2);
+  SET_METHOD(GetPropertyNames);
   // String
   SET_METHOD(Utf8);
   SET_METHOD(String);

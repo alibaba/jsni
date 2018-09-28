@@ -930,7 +930,14 @@ void* JSNIGetArrayBufferData(JSNIEnv* env, JSValueRef val);
 */
 size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val);
 
-
+/*! \fn JSValueRef JSNIGetPropertyNames(JSNIEnv* env, JSValueRef)
+    \brief Gets the names of the properties of the object.
+    \param env The JSNI environment pointer.
+    \param val The JavaScript object to get properties names from.
+    \return Returns an JavaScript array containning the names of the enumerable properties of the object.
+    \since JSNI 2.3.
+*/
+JSValueRef JSNIGetPropertyNames(JSNIEnv* env, JSValueRef val);
 
 #if defined(__cplusplus)
 }
