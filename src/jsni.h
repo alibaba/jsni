@@ -799,7 +799,7 @@ is no exception, this routine has no effect.
 */
 void JSNIClearException(JSNIEnv* env);
 
-/*! \fn
+/*! \fn JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg)
     \brief Constructs a JavaScript Error object.
     \param env The JSNI environment pointer.
     \param errmsg An error message.
@@ -808,7 +808,7 @@ void JSNIClearException(JSNIEnv* env);
 */
 JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg);
 
-/*! \fn
+/*! \fn JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg)
     \brief Constructs a JavaScript TypeError object.
     \param env The JSNI environment pointer.
     \param errmsg An error message.
@@ -817,7 +817,7 @@ JSValueRef JSNINewError(JSNIEnv* env, const char* errmsg);
 */
 JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg);
 
-/*! \fn
+/*! \fn JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg)
     \brief Constructs a JavaScript RangeError object.
     \param env The JSNI environment pointer.
     \param errmsg An error message.
@@ -826,7 +826,7 @@ JSValueRef JSNINewTypeError(JSNIEnv* env, const char* errmsg);
 */
 JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg);
 
-/*! \fn
+/*! \fn void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error)
     \brief Throw JavaScript Error object.
     \param env The JSNI environment pointer.
     \param error JavaScript Error Object.
@@ -835,7 +835,7 @@ JSValueRef JSNINewRangeError(JSNIEnv* env, const char* errmsg);
 */
 void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
 
-/*! \fn
+/*! \fn bool JSNIIsError(JSNIEnv* env, JSValueRef val)
     \brief Tests whether a JavaScript value is Error object.
     \param env The JSNI environment pointer.
     \param val A JavaScript Value.
@@ -844,93 +844,88 @@ void JSNIThrowErrorObject(JSNIEnv* env, JSValueRef error);
 */
 bool JSNIIsError(JSNIEnv* env, JSValueRef val);
 
-/*! \fn
+/*! \fn JSValueRef JSNINewInstance(JSNIEnv* env, JSValueRef constructor, int argc, JSValueRef* argv)
     \brief New an instance from a constructor.
     \param env The JSNI environment pointer.
     \param constructor The JavaScript function to be invoked as a constructor.
     \param argc The argument number to be passed to constructor.
     \param argv The argument array pointer to be passed to constructor.
-    \return 
+    \return Returns the constructed JavaScript object.
     \since JSNI 2.3.
 */
 JSValueRef JSNINewInstance(JSNIEnv* env, JSValueRef constructor, int argc, JSValueRef* argv);
 
-/*! \fn
-    \brief
+/*! \fn bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right)
+    \brief Tests whether left object is an instance of right object.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param left A JavaScript value to test.
+    \param right A JavaScript value which represents a function constructor.
+    \return Returns true if left object is an instance of right object.
     \since JSNI 2.3.
 */
 bool JSNIInstanceOf(JSNIEnv* env, JSValueRef left, JSValueRef right);
 
-/*! \fn
-    \brief
+/*! \fn JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info)
+    \brief Gets the new.target value of the call.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param info The callback info.
+    \return Returns the new.target of the call.
     \since JSNI 2.3.
 */
 JSValueRef JSNIGetNewTarget(JSNIEnv* env, JSNICallbackInfo info);
 
-/*! \fn
-    \brief
+/*! \fn bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right)
+    \brief Tests whether the left JavaScript value is strict-equal to the right JavaScript value.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param left The left JavaScript value.
+    \param right The right JavaScript value.
+    \return Returns true if the left JavaScript value is strict-equal to the right JavaScript value.
     \since JSNI 2.3.
 */
 bool JSNIStrictEquals(JSNIEnv* env, JSValueRef left, JSValueRef right);
 
-/*! \fn
-    \brief
+/*! \fn JSValueRef JSNINewArrayBuffer(JSNIEnv* env, size_t length)
+    \brief Constructs a JavaScript ArrayBuffer.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param length The ArrayBuffer length.
+    \return Returns a JavaSript ArrayBuffer.
     \since JSNI 2.3.
 */
 JSValueRef JSNINewArrayBuffer(JSNIEnv* env, size_t length);
 
-/*! \fn
-    \brief
+/*! \fn JSValueRef JSNINewArrayBufferExternalized(JSNIEnv* env, void* data, size_t length)
+    \brief Constructs a JavaScirpt ArrayBuffer with the externalized data.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param data The externalized data.
+    \param length The ArrayBuffer length.
+    \return Returns a JavaScript ArrayBuffer with an externalized data.
     \since JSNI 2.3.
 */
 JSValueRef JSNINewArrayBufferExternalized(JSNIEnv* env, void* data, size_t length);
 
-/*! \fn
-    \brief
+/*! \fn bool JSNIIsArrayBuffer(JSNIEnv* env, JSValueRef val)
+    \brief Tests whether a JavaScript value is ArrayBuffer.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param val A JavaScript value.
+    \return Returns true if the JavaScript value is ArrayBuffer.
     \since JSNI 2.3.
 */
 bool JSNIIsArrayBuffer(JSNIEnv* env, JSValueRef val);
 
-/*! \fn
-    \brief
+/*! \fn void* JSNIGetArrayBufferData(JSNIEnv* env, JSValueRef val)
+    \brief Gets the pointer to the buffer of ArrayBuffer data.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param val A JavaScript ArrayBuffer.
+    \return Returns the pointer to the buffer of ArrayBuffer data.
     \since JSNI 2.3.
 */
 void* JSNIGetArrayBufferData(JSNIEnv* env, JSValueRef val);
 
-/*! \fn
-    \brief
+/*! \fn size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val)
+    \brief Gets the length of ArrayBuffer.
     \param env The JSNI environment pointer.
-    \param
-    \param
-    \return
+    \param val A JavaScript ArrayBuffer.
+    \return Returns the length of ArrayBuffer.
     \since JSNI 2.3.
 */
 size_t JSNIGetArrayBufferLength(JSNIEnv* env, JSValueRef val);
