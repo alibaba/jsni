@@ -1,6 +1,6 @@
 {
   "name": "jsni",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "jsni is the interface for JavaScript and C/C++, which is vm neutral and keeps abi/api compatible. It is acronym for JavaScript Native Interface.",
   "main": "index.js",
   "scripts": {
