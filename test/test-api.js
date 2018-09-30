@@ -334,6 +334,7 @@ function needDumpReport() {
 function runTest(test) {
   try {
     test();
+    console.log(test.name + " passed(jsni).");
     report.pass_count += 1;
   } catch (e) {
     report.fail_count += 1;

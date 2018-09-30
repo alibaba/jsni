@@ -1371,5 +1371,5 @@ JSValueRef JSNIGetPropertyNames(JSNIEnv* env, JSValueRef val) {
   Local<Context> context = isolate->GetCurrentContext();
   Local<Object> object = JSNI::ToV8LocalValue(val).As<Object>();
   MaybeLocal<Array> names = object->GetPropertyNames(context);
-  return JSNI::ToJSNIValue(names.ToLocalChecked());
+  return JSNI::ToJSNIValue(scope.Escape(names.ToLocalChecked()));
 }
